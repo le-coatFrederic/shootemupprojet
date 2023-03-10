@@ -1,5 +1,5 @@
-#ifndef __Server__
-#define __Server__
+#ifndef SERVEUR_HPP
+#define SERVEUR_HPP
 
 #include <SFML/Network.hpp>
 #include <SFML/Network/Packet.hpp>
@@ -8,14 +8,10 @@
 #include <SFML/Network/TcpSocket.hpp>
 #include <vector>
 #include <iostream>
-#include "../../both/data/Data.hpp"
+#include "../data/Data.hpp"
 #include "../game/Party.hpp"
-
 class Server {
 protected:
-    //SINGLETON, on empeche toutes les possibilités de copie et création de nouveau objet.
-    Server(unsigned short port);
-
     // connection
     sf::TcpListener listener;
     std::vector<sf::TcpSocket*> clients;
@@ -31,10 +27,7 @@ protected:
     Data<Party*> parties;
 
 public:
-    //SINGLETON, on permet de voir le seul objet Server
-    static Server& getServer(unsigned short port);
-    Server(const Server&) = delete;
-    Server& operator=(const Server&) = delete;
+    Server(unsigned short port);
     ~Server();
 
     // accessors

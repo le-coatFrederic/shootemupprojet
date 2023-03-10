@@ -1,10 +1,5 @@
 #include "Server.hpp"
-#include <SFML/Network/Packet.hpp>
-#include <SFML/Network/Socket.hpp>
-#include <SFML/Network/TcpListener.hpp>
-#include <SFML/Network/TcpSocket.hpp>
-#include <stdexcept>
-#include <string>
+#include "../data/Data.hpp"
 
 Server::Server(unsigned short port) : listener(), clients() {
     if (listener.listen(port) != sf::Socket::Done)
@@ -12,14 +7,11 @@ Server::Server(unsigned short port) : listener(), clients() {
     std::cout << "Server listening on port " << port << ".\n";
 }
 
-Server& Server::getServer(unsigned short port) {
-    static Server instance(port);
-    return instance;
-}
-
 Server::~Server() {
     for (sf::TcpSocket* socket : clients)
         delete socket;
+
+
 }
 
 Data<Party*> Server::getParties() {
@@ -39,7 +31,7 @@ void Server::run() {
 }
 
 void Server::closeServer() {
-
+    this->running = false;
 }
 
 void Server::listeningExistingConnection() {
@@ -68,10 +60,12 @@ void Server::readMessage(sf::Packet message) {
     std::cout << msg << std::endl;
 }
 
-void createParty() {
+void Server::createParty() {
 
 }
 
-void leaveParty(Party* party) {
+void Server::leaveParty(Party* party) {
 
 }
+
+template class Data<Party*>;

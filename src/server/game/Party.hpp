@@ -1,7 +1,7 @@
 #ifndef PARTY_HPP
 #define PARTY_HPP
 
-#include "../../both/data/Data.hpp"
+#include "../data/Data.hpp"
 #include "Client.hpp"
 #include "../entities/Entity.hpp"
 
