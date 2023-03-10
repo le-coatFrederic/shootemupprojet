@@ -14,14 +14,14 @@ class Server {
 protected:
     // connection
     sf::TcpListener listener;
-    std::vector<sf::TcpSocket*> clients;
+    Data<Client*> clients;
     sf::SocketSelector selector;
     bool running;
 
     // network
     void listeningExistingConnection();
     void listeningNewConnection();
-    void readMessage(sf::Packet message);
+    void readMessage(Client* client, sf::Packet message);
 
     // game mechanics
     Data<Party*> parties;

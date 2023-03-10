@@ -11,12 +11,12 @@ public:
     ~Data();
 
     // accessors
-    std::vector<T*> getData();
-    void addEntity(T* cell);
+    std::vector<T> getData();
+    void addEntity(T cell);
 
-    void deleteCell(T* cell);
+    void deleteCell(T cell);
 private:
-    std::vector<T*> data;
+    std::vector<T> data;
 };
 #endif
 

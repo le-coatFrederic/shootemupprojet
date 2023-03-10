@@ -3,6 +3,7 @@
 #include <SFML/Network/Packet.hpp>
 #include <SFML/Network/Socket.hpp>
 #include <iostream>
+#include <string>
 
 Network::Network(sf::IpAddress ip, short int port) {
     this->ip = ip;
@@ -19,6 +20,7 @@ Network::~Network() {
 // connexion methods
 void Network::run() {
     this->connexion(this->ip, this->port);
+    this->sendMessage(std::string("Je suis la pour te parler"));
 }
 
 void Network::sendMessage(std::string message) {

@@ -1,10 +1,11 @@
-#include "Data.hpp"
+#ifndef DATA_IMPL_HPP
+#define DATA_IMPL_HPP
+
 #include <algorithm>
 #include <cstddef>
-#include "../game/Party.hpp"
+#include <vector>
+#include "Data.hpp"
 
-
-// constructors / destructors
 template <typename T>
 Data<T>::Data() {
 }
@@ -15,7 +16,6 @@ Data<T>::~Data() {
         delete cell;
 }
 
-// accessors
 template <typename T>
 std::vector<T> Data<T>::getData() {
     return this->data;
@@ -34,5 +34,4 @@ void Data<T>::deleteCell(T cell) {
         data.erase(it);
 }
 
-
-template class Data<Party*>;
+#endif /* DATA_IMPL_HPP */

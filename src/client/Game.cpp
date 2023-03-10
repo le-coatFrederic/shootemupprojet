@@ -20,7 +20,7 @@ Game::Game() {
     this->addEntities(new Entity(sf::Vector2f(15.f, 540.f), sf::Vector2f(30.f, 10.f), this->window));
     this->addEntities(new Entity(sf::Vector2f(320.f, 147.f), sf::Vector2f(50.f, 40.f), this->window));
 
-    this->connexion("93.8.39.46", 9010);
+    this->connexion("localhost", 9010);
 }
 
 Game::~Game() {

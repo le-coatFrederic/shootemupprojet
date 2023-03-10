@@ -1,14 +1,16 @@
 #include "Server.hpp"
 #include "../data/Data.hpp"
+#include <iostream>
 
 Server::Server(unsigned short port) : listener(), clients() {
     if (listener.listen(port) != sf::Socket::Done)
         throw std::runtime_error("Error listening.");
     std::cout << "Server listening on port " << port << ".\n";
+    this->run();
 }
 
 Server::~Server() {
-    for (sf::TcpSocket* socket : clients)
+    for (Client* socket : clients.getData())
         delete socket;
 
 
@@ -35,11 +37,11 @@ void Server::closeServer() {
 }
 
 void Server::listeningExistingConnection() {
-    for (sf::TcpSocket* client : clients) {
-        if (selector.isReady(*client)) {
+    for (Client* client : clients.getData()) {
+        if (selector.isReady(*client->getSocket())) {
             sf::Packet receivePacket;
-                if (client->receive(receivePacket) == sf::Socket::Done) { // have to treat any possible case
-                    this->readMessage(receivePacket);
+                if (client->getSocket()->receive(receivePacket) == sf::Socket::Done) { // have to treat any possible case
+                    this->readMessage(client, receivePacket);
                 }
         }
     }
@@ -50,14 +52,15 @@ void Server::listeningNewConnection() {
         sf::TcpSocket *socket = new sf::TcpSocket();
         listener.accept(*socket);
         selector.add(*socket);
-        clients.push_back(socket);
+        clients.addEntity(new Client(socket));
+        std::cout << "Client ip : " << socket->getRemoteAddress() << std::endl;
     }
 }
 
-void Server::readMessage(sf::Packet message) {
+void Server::readMessage(Client* client, sf::Packet message) {
     std::string msg;
     message >> msg;
-    std::cout << msg << std::endl;
+    std::cout << client->getSocket()->getRemoteAddress() << msg << std::endl;
 }
 
 void Server::createParty() {

@@ -8,7 +8,7 @@
 class Party {
 public:
     // constructors / destructors
-    Party();
+    Party(short int id);
     ~Party();
 
     // accessors
@@ -16,9 +16,16 @@ public:
     Data<Client*> getClients();
     Data<Entity*> getEntities();
 
+    // game mechanics
+    void clientConnect(Client *client);
+    void clientDisconnect(Client* client);
+    bool isAvailable();
+
 protected:
     // identity
     short int id;
+    int maxPlayer;
+    bool running;
 
     // data
     Data<Client*> clients;
