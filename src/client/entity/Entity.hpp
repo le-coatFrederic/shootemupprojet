@@ -1,6 +1,7 @@
 #ifndef ENTITY_HPP
 #define ENTITY_HPP
 
+#include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Network.hpp>
@@ -16,9 +17,16 @@ public:
     Entity(sf::Vector2f pos, const sf::Vector2f size, sf::RenderWindow* window);
     ~Entity();
     
+    // accessors
+    sf::RectangleShape getShape();
+
     // methods
     void render();
     void update();
+
+    // game mechanics
+    bool mouseCollision(sf::Vector2i mousePos);
+    void setColor(sf::Color color);
 
 protected:
     // variable
@@ -32,6 +40,7 @@ protected:
     sf::Vector2f size;
     float speed;
     float angle;
+    void windowColliding();
 
     // protected methods
     void initVariable();
