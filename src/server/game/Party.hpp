@@ -1,9 +1,9 @@
 #ifndef PARTY_HPP
 #define PARTY_HPP
 
-#include "../data/Data.hpp"
 #include "Client.hpp"
 #include "../entities/Entity.hpp"
+#include <vector>
 
 class Party {
 public:
@@ -13,8 +13,8 @@ public:
 
     // accessors
     short int getId();
-    Data<Client*> getClients();
-    Data<Entity*> getEntities();
+    std::vector<Client*> getClients();
+    std::vector<Entity*> getEntities();
 
     // game mechanics
     void clientConnect(Client *client);
@@ -28,8 +28,8 @@ protected:
     bool running;
 
     // data
-    Data<Client*> clients;
-    Data<Entity*> entities;
+    std::vector<Client*> clients;
+    std::vector<Entity*> entities;
     //bullets
 };
 

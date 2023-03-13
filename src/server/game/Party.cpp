@@ -1,5 +1,4 @@
 #include "Party.hpp"
-#include "../data/Data.hpp"
 
 Party::Party(short int id) {
     this->id = id;
@@ -14,24 +13,31 @@ short int Party::getId() {
     return id;
 }
 
-Data<Client*> Party::getClients() {
+std::vector<Client*> Party::getClients() {
     return clients;
 }
 
-Data<Entity*> Party::getEntities() {
+std::vector<Entity*> Party::getEntities() {
     return entities;
 }
 
 void Party::clientConnect(Client *client) {
-    this->getClients().addEntity(client);
+    this->getClients().push_back(client);
 }
 
 void Party::clientDisconnect(Client *client) {
-    this->clients.deleteCell(client);
+    int id;
+    for (int i = 0; i < this->clients.size(); i++)
+        if (this->clients.at(i) == client) {
+            delete this->clients.at(i);
+            break;
+        }
+
+
 }
 
 bool Party::isAvailable() {
-    if (maxPlayer == clients.getData().size() || running)
+    if (maxPlayer == clients.size() || running)
         return false;
     return true;
 }

@@ -33,6 +33,7 @@ public:
     // Accessors
     const bool getWindowState() const;
     sf::Vector2i getMousePos();
+    std::vector<Entity*> getEntities();
 
 protected:
     // Variables

@@ -10,6 +10,13 @@ typedef enum Role{
     Technician
 }Role;
 
+typedef enum State {
+    justConnected,
+    askingParties,
+    inParty,
+    inGame
+}State;
+
 class Party;
 
 class Client {
@@ -33,6 +40,7 @@ protected:
     //game information
     Party* party;
     Role role;
+    State state;
 };
 
 #endif

@@ -22,10 +22,11 @@ sf::RectangleShape Entity::getShape() {
 }
 
 void Entity::update() {
-    this->pos.x = pos.x + (this->speed * angle);
-    this->pos.y = pos.y + (this->speed * (angle - 1));
-    this->shape.setPosition(this->pos);
-    this->windowColliding();
+
+}
+
+void Entity::update(sf::Vector2i mouse) {
+    this->shape.setPosition(sf::Vector2f(mouse.x, mouse.y));
 }
 
 // methods

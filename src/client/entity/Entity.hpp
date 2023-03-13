@@ -23,6 +23,8 @@ public:
     // methods
     void render();
     void update();
+    void update(sf::Vector2i mouse);
+    std::vector<std::string> readline(std::string msg);
 
     // game mechanics
     bool mouseCollision(sf::Vector2i mousePos);

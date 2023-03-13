@@ -7,10 +7,12 @@
 #include <SFML/Network.hpp>
 #include <string>
 
+class Game;
+
 class Network {
 public:
     // constructors / destructors
-    Network(sf::IpAddress ip, short int port);
+    Network(sf::IpAddress ip, short int port, Game* game);
     ~Network();
 
     // accessors
@@ -20,10 +22,13 @@ public:
     
     // messages
     void sendMessage(std::string message);
+    void readMessage(sf::Packet);
+    std::vector<std::string> readline(std::string msg, char separator);
 
 protected:
     // clients parameters
     std::string pseudo;
+    Game* game;
 
     // connexion parameters
     bool connected;

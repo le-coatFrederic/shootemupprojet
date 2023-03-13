@@ -9,6 +9,8 @@
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Window/WindowStyle.hpp>
 #include <iostream>
+#include <string>
+#include <vector>
 
 // Constructors / destructors
 Game::Game() {
@@ -16,9 +18,8 @@ Game::Game() {
     this->initNetwork();
     this->initWindow();
 
-    this->addEntities(new Entity(sf::Vector2f(520.f, 510.f), sf::Vector2f(50.f, 75.f), this->window));
-    this->addEntities(new Entity(sf::Vector2f(15.f, 540.f), sf::Vector2f(30.f, 10.f), this->window));
-    this->addEntities(new Entity(sf::Vector2f(320.f, 147.f), sf::Vector2f(50.f, 40.f), this->window));
+    this->addEntities(new Entity(sf::Vector2f((this->window->getSize().x / 2) - 25.f, this->window->getSize().y - 25.f), sf::Vector2f(50.f, 50.f), this->window));
+    this->addEntities(new Entity(sf::Vector2f((this->window->getSize().x / 2) - 25.f, this->window->getSize().y - 25.f), sf::Vector2f(50.f, 50.f), this->window));
 
     this->connexion("localhost", 9010);
 }
@@ -50,7 +51,7 @@ void Game::initNetwork() {
 }
 
 void Game::connexion(sf::IpAddress ip, short int port) {
-    this->server = new Network(ip, port);
+    this->server = new Network(ip, port, this);
 }
 
 // Public methods
@@ -64,8 +65,12 @@ void Game::update() {
 }
 
 void Game::updateEntities() {
-    for (Entity* entity : this->entities)
-        entity->update();
+    for (int i = 0; i < entities.size(); i++) {
+        if (i == 0) {
+            entities.at(i)->update(mousePos);
+            this->server->sendMessage("pos:" + std::to_string(entities.at(i)->getShape().getPosition().x) + "," + std::to_string(entities.at(i)->getShape().getPosition().y));
+        }
+    }
 
 }
 
@@ -102,11 +107,6 @@ void Game::render() {
 
 void Game::renderEntities() {
     for (Entity* entity : this->entities) {
-        if (entity->mouseCollision(mousePos)) 
-            entity->setColor(sf::Color::Green);
-        else
-            entity->setColor(sf::Color::Red);
-    
         entity->render();
     }
 }
@@ -123,4 +123,8 @@ const bool Game::getWindowState() const {
 
 sf::Vector2i Game::getMousePos() {
     return this->mousePos;
+}
+
+std::vector<Entity*> Game::getEntities() {
+    return entities;
 }

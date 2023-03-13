@@ -12,17 +12,11 @@ client_objs = $(addprefix obj/client/, $(notdir $(patsubst src/client/%.cpp, obj
 
 all: $(servername) $(clientname)
 
-$(servername): $(server_src)
-	$(cxx) -o $@ $^ -L $(server_head) $(cxxflags)
+$(servername): $(server_src) $(server_head)
+	$(cxx) -o $@ $^ $(cxxflags)
 
-$(server_objs): $(server_src)
-	$(cxx) -o $@ -c $< $(cxxflags)
-
-$(clientname): $(client_src)
-	$(cxx) -o $@ $^ -L $(client_head) $(cxxflags)
-
-$(client_objs): $(client_src)
-	$(cxx) -o $@ -c $< $(cxxflags)
+$(clientname): $(client_src) $(client_head)
+	$(cxx) -o $@ $^ $(cxxflags)
 
 affichage: $(server_src) $(server_head) $(client_src) $(client_head) $(server_objs) $(client_objs)
 	echo -e "\n$(server_src)\n$(server_head)\n$(client_src)\n$(client_head)\n\n$(server_objs)\n$(client_objs)"
