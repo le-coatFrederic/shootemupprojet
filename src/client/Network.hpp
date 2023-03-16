@@ -21,6 +21,7 @@ public:
     void run();
     
     // messages
+    void updateNetwork();
     void sendMessage(std::string message);
     void readMessage(sf::Packet);
     std::vector<std::string> readline(std::string msg, char separator);

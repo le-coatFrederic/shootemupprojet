@@ -11,6 +11,7 @@ client_head = $(wildcard src/client/*.hpp src/client/*/*.hpp src/client/*/*/*.hp
 client_objs = $(addprefix obj/client/, $(notdir $(patsubst src/client/%.cpp, obj/client/%.o, $(client_src))))
 
 all: $(servername) $(clientname)
+	mkdir -p $(bindir)
 
 $(servername): $(server_src) $(server_head)
 	$(cxx) -o $@ $^ $(cxxflags)

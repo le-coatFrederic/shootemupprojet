@@ -21,7 +21,7 @@ Game::Game() {
     this->addEntities(new Entity(sf::Vector2f((this->window->getSize().x / 2) - 25.f, this->window->getSize().y - 25.f), sf::Vector2f(50.f, 50.f), this->window));
     this->addEntities(new Entity(sf::Vector2f((this->window->getSize().x / 2) - 25.f, this->window->getSize().y - 25.f), sf::Vector2f(50.f, 50.f), this->window));
 
-    this->connexion("localhost", 9010);
+    this->connexion("93.8.39.46", 9010);
 }
 
 Game::~Game() {
@@ -60,6 +60,7 @@ void Game::update() {
     
     this->pollEvents();   
 
+    this->server->updateNetwork();
     this->updateEntities();
     this->updateMousePosition();
 }

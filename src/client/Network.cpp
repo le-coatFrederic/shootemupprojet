@@ -23,7 +23,6 @@ Network::~Network() {
 // connexion methods
 void Network::run() {
     this->connexion(this->ip, this->port);
-    this->sendMessage(std::string("@"));
 }
 
 void Network::sendMessage(std::string message) {
@@ -36,11 +35,18 @@ void Network::sendMessage(std::string message) {
         std::cout << "je n\'ai pas reussis\n";
 }
 
+void Network::updateNetwork() {
+    sf::Packet packet;
+
+    if (this->socket.receive(packet) == sf::Socket::Done)
+        this->readMessage(packet);
+}
+
 void Network::readMessage(sf::Packet message) {
     std::string msg;
     message >> msg;
     //std::cout << client->getSocket()->getRemoteAddress() << " m'a envoye : " << msg << "\n";
-    std::vector<std::string> msgElements = this->readline(msg, '.');
+    std::vector<std::string> msgElements = this->readline(msg, ':');
     std::cout << "je lis :\n";
 
     for (std::string mot : msgElements)
@@ -73,6 +79,7 @@ std::vector<std::string> Network::readline(std::string msg, char separator) {
 void Network::connexion(sf::IpAddress ip, short int port) {
     if (this->socket.connect(ip, port) == sf::Socket::Done) {
         connected = true;
+        this->socket.setBlocking(false);
         std::cout << "connected\n";
     } else {
         std::cout << "error : not connected\n";
